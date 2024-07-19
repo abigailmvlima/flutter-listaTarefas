@@ -79,8 +79,9 @@ class _TodoListPageState extends State<TodoListPage> {
                 const SizedBox(height: 16),
                 Row(
                   children: [
-                     Expanded(
-                      child: Text('Você possui ${todos.length} tarefas pendentes'),
+                    Expanded(
+                      child:
+                          Text('Você possui ${todos.length} tarefas pendentes'),
                     ),
                     const SizedBox(
                       width: 8,
