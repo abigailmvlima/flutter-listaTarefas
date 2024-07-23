@@ -4,9 +4,10 @@ import 'package:intl/intl.dart';
 import '../models/todo.dart';
 
 class TodoListItem extends StatelessWidget {
-  const TodoListItem({super.key, required this.todo});
+  const TodoListItem({super.key, required this.todo, required this.onDelete,});
 
   final Todo todo;
+  final Function(Todo) onDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -16,13 +17,16 @@ class TodoListItem extends StatelessWidget {
           // Specify a key if the Slidable is dismissible.
           key: const ValueKey(0),
       // The end action pane is the one at the right or the bottom side.
-      endActionPane: const ActionPane(
-      motion: ScrollMotion(),
+      endActionPane: ActionPane(
+      motion: const ScrollMotion(),
+      extentRatio: 0.25,
       children: [
       SlidableAction(
       // An action can be bigger than the others.
-        onPressed: null,
-        backgroundColor: Color(0xFFFE4A49),
+        onPressed: (context) {
+      onDelete(todo);
+      },
+        backgroundColor: const Color(0xFFFE4A49),
         foregroundColor: Colors.white,
         icon: Icons.delete,
         label: 'Delete',

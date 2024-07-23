@@ -13,6 +13,8 @@ class _TodoListPageState extends State<TodoListPage> {
   final TextEditingController todoController = TextEditingController();
 
   List<Todo> todos = [];
+  Todo? deletedTodo;
+  int? deletedTodoPos;
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +74,7 @@ class _TodoListPageState extends State<TodoListPage> {
                       for (Todo todo in todos)
                         TodoListItem(
                           todo: todo,
+                          onDelete: onDelete,
                         ),
                     ],
                   ),
@@ -108,6 +111,30 @@ class _TodoListPageState extends State<TodoListPage> {
           ),
         ),
       ),
+    );
+  }
+  void onDelete (Todo todo) {
+    deletedTodo = todo;
+    deletedTodoPos = todos.indexOf(todo);
+    setState(() {
+      todos.remove(todo);
+    });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+            content: Text('Tarefa ${todo.title} foi removida', style: const TextStyle(color: Colors.blueGrey),
+            ),
+          backgroundColor: Colors.white,
+          action: SnackBarAction(
+            label: 'Desfazer',
+            textColor: Colors.pink,
+            onPressed: () {
+              setState(() {
+                todos.insert(deletedTodoPos!, deletedTodo!);
+              });
+            },
+          ),
+        ),
     );
   }
 }
