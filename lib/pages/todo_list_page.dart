@@ -90,7 +90,7 @@ class _TodoListPageState extends State<TodoListPage> {
                       width: 8,
                     ),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: showDeleteTodosConfirmationDialog,
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.pink,
                           padding: const EdgeInsets.all(14),
@@ -138,5 +138,29 @@ class _TodoListPageState extends State<TodoListPage> {
           duration: const Duration(seconds: 4),
         ),
     );
+  }
+  void showDeleteTodosConfirmationDialog() {
+    showDialog(context: context, builder: (context) => AlertDialog(
+      title: const Text('Limpar Tudo?'),
+      content: const Text('Você tem certeza que deseja apagar todas as terefas?'),
+      actions: [
+        TextButton(
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+        child: const Text('Cancelar', style: TextStyle(color: Colors.pink),),),
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+            deletedAllTodos();
+          },
+          child: const Text('Limpar Tudo', style: TextStyle(color: Colors.red),),),
+      ],
+    ));
+  }
+  void deletedAllTodos() {
+    setState(() {
+      todos.clear();
+    });
   }
 }
