@@ -19,6 +19,18 @@ class _TodoListPageState extends State<TodoListPage> {
   int? deletedTodoPos;
 
   @override
+    void initState() {
+      super.initState();
+
+      todoRepository.getTodoList().then((value) => {
+        setState(() {
+          todos = value;
+        }),
+      });
+
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
